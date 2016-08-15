@@ -1,5 +1,8 @@
 <html>
 	<head>
+	 	<meta charset="utf-8">
+ 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+ 		<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script type="text/javascript" src="jquery.min.js"></script>
 	<script type="text/javascript" src="bot.js"></script>
 	
@@ -45,8 +48,8 @@
 	</head>
 <body>
 <div class="wrapper">
-	<div class="container">
-		<div class="obj" onclick="tcatch()"></div>
+	<div class="container" onclick="pixelstart()">
+		<h1>CLICK TO START</h1>
 	</div>
 
 </div>
@@ -58,44 +61,51 @@
 </body>
 
 <script type="text/javascript">
-	$(document).ready(function(){
-		$('.container').show();
 
-	
-	exp();
-		
+
+	$(document).ready(function(){
+		$('.container').show(); //render when doc loaded		
 	});
 
 	myBot = BOT; //instance
 	myBot.world(400); //create world 10x10px
 	var score = 0;
+	var start = false;
 
 	function exp() {
 			var f=Math.floor((Math.random() * 499) + 0);
 			var g=Math.floor((Math.random() * 499) + 0);
-			console.log("rand: x  "+ f + " rand y: " + g);
-		myBot.explore(f,g);
-score -= 1;
-$("#score").html(score);
-if(score<-19){
-	alert("You die-dead!");
-} else if(score>39) {
-	alert("Meh! You are just lucky. :p");
-} else {
-		setTimeout(exp,600);
-		}
-		
-		}
+			//console.log("rand: x  "+ f + " rand y: " + g);
+			myBot.explore(f,g);
+			score -= 1;
+			$("#score").html(score);
+				if(score<-19){
+					alert("You die-dead!");
+					start = false;
+				} else if(score>39) {
+					alert("Meh! You are just lucky. :p");
+					start = false;
+				} else {
+					setTimeout(exp,600);
+				}
+		} //
 		
 		function tcatch() {
 			score += 5;
 			$("#score").html(score);
 		}
 		
-	
-	
+
+
+	function pixelstart(){
+		if(start == false) {
+		$('.container').html('<div class="obj" onclick="tcatch()"></div>');
+		start = true;
+		exp();
+	} else {
+		//do nothing
+	}
+	}
 </script>
-
-
 
 </html>
