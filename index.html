@@ -1,0 +1,101 @@
+<html>
+	<head>
+	<script type="text/javascript" src="jsmine/app/assets/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="bot.js"></script>
+	
+	<style type="text/css">
+		.wrapper {
+			width: 500px;
+			height: 500px;
+			left: 0;
+			right: 0;
+			margin-left: auto;
+			margin-right: auto;
+			position: absolute;
+		}
+		.container {
+			width: 500px;
+			height:500px;
+			background: yellow;
+			border: 1px dotted red;
+			position: relative;
+		}
+		.obj {
+			width: 20px;
+			height: 20px;
+			background: black;
+			/*border-radius: 8px;*/
+			position: absolute;
+			left:0;
+			right: 0;
+			
+		}
+		.scoreboard {
+			
+			position: absolute;
+			background: #fff200;
+			left:0;
+			top:0;
+		}
+		#score {
+			font-size: 40px;
+		}
+	</style>
+
+	</head>
+<body>
+<div class="wrapper">
+	<div class="container">
+		<div class="obj" onclick="tcatch()"></div>
+	</div>
+
+</div>
+	<div class="scoreboard">
+	<h3>Score</h3>
+	<div id="score">
+	</div>
+	</div>
+</body>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('.container').show();
+
+	
+	exp();
+		
+	});
+
+	myBot = BOT; //instance
+	myBot.world(400); //create world 10x10px
+	var score = 0;
+
+	function exp() {
+			var f=Math.floor((Math.random() * 499) + 0);
+			var g=Math.floor((Math.random() * 499) + 0);
+			console.log("rand: x  "+ f + " rand y: " + g);
+		myBot.explore(f,g);
+score -= 1;
+$("#score").html(score);
+if(score<-19){
+	alert("You die-dead!");
+} else if(score>39) {
+	alert("Meh! You are just lucky. :p");
+} else {
+		setTimeout(exp,600);
+		}
+		
+		}
+		
+		function tcatch() {
+			score += 5;
+			$("#score").html(score);
+		}
+		
+	
+	
+</script>
+
+
+
+</html>
