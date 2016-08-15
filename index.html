@@ -22,6 +22,7 @@
 			background: yellow;
 			border: 1px dotted red;
 			position: relative;
+			text-align: center;
 		}
 		.obj {
 			width: 20px;
@@ -81,11 +82,13 @@
 			$("#score").html(score);
 				if(score<-19){
 					alert("You die-dead!");
+					$('.container').html('<h1>REINCARNATE</h1>');
 					start = false;
 					score=0;
 				} else if(score>39) {
 					score = 0;
 					alert("Meh! You are just lucky. :p");
+					$('.container').html('<h1>PLAY AGAIN!</h1>');
 					start = false;
 				} else {
 					setTimeout(exp,600);
