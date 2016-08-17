@@ -8,7 +8,7 @@
 	
 	<style type="text/css">
 		.wrapper {
-			width: 500px;
+			width: 900px;
 			height: 500px;
 			left: 0;
 			right: 0;
@@ -17,32 +17,45 @@
 			position: absolute;
 		}
 		.container {
-			width: 500px;
+			width: 900px;
 			height:500px;
 			background: yellow;
 			border: 1px dotted red;
 			position: relative;
 			text-align: center;
+			/*cursor: url('cursor.png'),auto; */
 		}
+
 		.obj {
-			width: 20px;
-			height: 20px;
-			background: black;
+			width: 40px;
+			height: 40px;
+			background-image:  url('cash.png');
+			background-size: 40px;
 			/*border-radius: 8px;*/
 			position: absolute;
 			left:0;
 			right: 0;
+
 			
+		}
+		.obj:hover {
+			background: red;
 		}
 		.scoreboard {
 			
 			position: absolute;
 			background: #fff200;
 			left:0;
-			top:0;
+			right: 0;
+			bottom:0;
+			margin-left: auto;
+			margin-right: auto;
+
 		}
-		#score {
-			font-size: 40px;
+		.score {
+			font-size: 30px;
+			float: left;
+			padding-right: 30px;
 		}
 	</style>
 
@@ -51,13 +64,22 @@
 <div class="wrapper">
 	<div class="container" onclick="pixelstart()">
 		<h1>CLICK TO START</h1>
+		<h3>Instructions:</h3>
+		<p>Lorem ipsum Amet do Duis qui in sint do nostrud ad aliquip ullamco occaecat cillum ex non enim officia occaecat commodo minim ea nostrud velit in do aliquip consectetur minim aliquip in culpa Excepteur do ex enim tempor cillum qui eiusmod aliquip id dolore aliqua quis sint nisi adipisicing Duis incididunt in elit in tempor dolore velit est dolor aliquip culpa nostrud cillum anim in nulla qui fugiat est ea ad elit culpa aliquip dolor et eiusmod cillum sint esse Duis minim cillum ea deserunt veniam dolor mollit laboris et in velit sit minim dolor amet incididunt qui est sed Excepteur minim sunt consequat Ut sed magna Excepteur sit consequat velit cupidatat adipisicing ullamco adipisicing occaecat dolore velit ex ut non occaecat id in elit amet reprehenderit commodo occaecat eiusmod sint Duis do ea non nisi consequat reprehenderit pariatur in reprehenderit reprehenderit sed.</p>
+		<p>That is it!</p>
 	</div>
 
 </div>
 	<div class="scoreboard">
-	<h3>Score</h3>
-	<div id="score">
-	</div>
+	<div style="float:left; font-weight:bold;" class="score">Health: </div>
+	<div id="score" class="score">0</div>
+		<div style="float:left; font-weight:bold;" class="score">Level: </div>
+		<div id="level" class="score"> -	</div>
+				<div style="float:left; font-weight:bold;" class="score">speed: </div>
+				<div id="speed" class="score"> - </div>
+						<div style="float:left; font-weight:bold;" class="score">Score: </div>
+				<div id="realscore" class="score"> - </div>
+
 	</div>
 </body>
 
@@ -72,31 +94,46 @@
 	myBot.world(400); //create world 10x10px
 	var score = 0;
 	var start = false;
+	var level = 1;
+	var speed = 1200;
+	var realscore = 0;
 
 	function exp() {
-			var f=Math.floor((Math.random() * 499) + 0);
+			var f=Math.floor((Math.random() * 799) + 0);
 			var g=Math.floor((Math.random() * 499) + 0);
 			//console.log("rand: x  "+ f + " rand y: " + g);
 			myBot.explore(f,g);
 			score -= 1;
 			$("#score").html(score);
+			$("#level").html(level);
+			$("#speed").html(speed);
+			$("#realscore").html(realscore);
 				if(score<-19){
-					alert("You die-dead!");
-					$('.container').html('<h1>REINCARNATE</h1>');
+					$('.container').html('<h1>You die-dead</h1><h2>REINCARNATE</h2>');
 					start = false;
 					score=0;
-				} else if(score>39) {
-					score = 0;
-					alert("Meh! You are just lucky. :p");
-					$('.container').html('<h1>PLAY AGAIN!</h1>');
-					start = false;
+					level =1;
+					speed = 1200;
 				} else {
-					setTimeout(exp,600);
+					setTimeout(exp,speed);
+					realscore++;
 				}
+
+
+				if(score>level) {
+					level+=1;
+					speed-=20;
+					if(speed<1) {
+						speed = 700;
+					}
+					
+					//$('.container').html('<h1>PLAY AGAIN!</h1>');
+					//start = false;
+				} 
 		} //
 		
 		function tcatch() {
-			score += 5;
+			score += 2;
 			$("#score").html(score);
 		}
 		
@@ -106,7 +143,7 @@
 		if(start == false) {
 		$('.container').html('<div class="obj" onclick="tcatch()"></div>');
 		start = true;
-		exp();
+		exp(speed);
 	} else {
 		//do nothing
 	}
