@@ -40,7 +40,7 @@ this.draw = function() {
 		var ly = xy.top;
 
 
-		var elm = $('<div class="obj" onmouseover="tcatch()"></div>');
+		var elm = $('<div class="obj" onmouseover="tcatch()" onclick="tcatch()"></div>');
 		elm.addClass('obj');
 		elm.css({"left": lx, "top": ly});
 		elm.animate({
