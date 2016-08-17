@@ -79,7 +79,8 @@
 				<div id="speed" class="score"> - </div>
 						<div style="float:left; font-weight:bold;" class="score">Score: </div>
 				<div id="realscore" class="score"> - </div>
-
+				<div style="float:left; font-weight:bold;" class="score">Best Score: </div>
+				<div id="bestScore" class="score"> - </div>
 	</div>
 </body>
 
@@ -97,6 +98,18 @@
 	var level = 1;
 	var speed = 1200;
 	var realscore = 0;
+	var bestscore =0;
+
+		function bestScore(realscore) {
+			if(bestscore<realscore){
+				bestscore = realscore;
+				$("#bestScore").html(bestscore);
+				console.log("i am triggered" + realscore + "best: " + bestscore);
+			} else {
+				$("#bestScore").html(bestscore);
+			}
+
+		}
 
 	function exp() {
 			var f=Math.floor((Math.random() * 799) + 0);
@@ -104,10 +117,12 @@
 			//console.log("rand: x  "+ f + " rand y: " + g);
 			myBot.explore(f,g);
 			score -= 1;
+			realscore--;
 			$("#score").html(score);
 			$("#level").html(level);
 			$("#speed").html(speed);
 			$("#realscore").html(realscore);
+			bestScore(realscore);
 				if(score<-19){
 					$('.container').html('<h1>You die-dead</h1><h2>REINCARNATE</h2>');
 					start = false;
@@ -117,23 +132,31 @@
 				} else {
 					setTimeout(exp,speed);
 					realscore++;
+					realscore*=1.6;
+					realscore/=speed;
+					realscore = Math.round(realscore);
+
 				}
 
 
 				if(score>level) {
-					level+=1;
+					level++;
+					realscore+=2;
 					speed-=20;
 					if(speed<1) {
 						speed = 700;
 					}
 					
-					//$('.container').html('<h1>PLAY AGAIN!</h1>');
-					//start = false;
+					
 				} 
 		} //
 		
+	
+
 		function tcatch() {
 			score += 2;
+			realscore ++;
+			
 			$("#score").html(score);
 		}
 		
